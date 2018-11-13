@@ -14,7 +14,9 @@ import com.me.mybatis.sqlsession.MySqlSession;
 public class Main {
 
     public static MySqlSession getSqlSession() {
-        return new MySqlSession(new MyConfiguration(),
+        MyConfiguration myConfiguration = new MyConfiguration();
+        myConfiguration.scanPath("com.me.mybatis.dao");
+        return new MySqlSession(myConfiguration,
                 MyExecutorFactory.getExecutor(MyExecutorFactory.ExecutorType.CACHING.name()));
     }
 

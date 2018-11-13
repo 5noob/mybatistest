@@ -12,17 +12,18 @@ import java.util.Map;
  */
 public class MyMapperRegistry {
 
-    public static final Map<String, MapperData> methodSqlMapping = new HashMap<>();
+    public static Map<String, MapperData> methodSqlMapping = new HashMap<>();
 
-    /**
-     * 使用
-     * 1. 在这里配置
-     * 2. Java Bean的属性名字要和数据库表的名字一致
-     */
 
     public MyMapperRegistry() {
-        methodSqlMapping.put("com.me.mybatis.dao.TestDAO.selectById",
-                new MapperData("select * from test where id = %d", Test.class));
+    }
+
+    public void put(String key, MapperData mapperData){
+        methodSqlMapping.put(key, mapperData);
+    }
+
+    public MapperData get(String key){
+        return methodSqlMapping.get(key);
     }
 
     public class MapperData<T>{
@@ -49,9 +50,5 @@ public class MyMapperRegistry {
         public void setType(Class<T> type) {
             this.type = type;
         }
-    }
-
-    public MapperData get(String namespace){
-        return methodSqlMapping.get(namespace);
     }
 }

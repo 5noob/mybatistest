@@ -22,7 +22,8 @@ public class MyStatementHandler {
     }
 
     public <T> T query(MyMapperRegistry.MapperData mapperData, Object param) throws Exception {
-        String sql = String.format(mapperData.getSql(), Integer.parseInt(String.valueOf(param)));
+        String sql = mapperData.getSql();
+        sql = sql.replace("?", String.valueOf(param));
         PreparedStatement preparedStatement = myParameterHandler.getPreparedStatement(sql);
         ResultSet rs = preparedStatement.executeQuery();
         return myResultSetHandler.handleResultSet(rs, mapperData.getType());
