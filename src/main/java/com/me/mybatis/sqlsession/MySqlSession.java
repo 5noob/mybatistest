@@ -1,6 +1,7 @@
 package com.me.mybatis.sqlsession;
 
 import com.me.mybatis.config.MyConfiguration;
+import com.me.mybatis.config.MyMapperRegistry;
 import com.me.mybatis.executor.MyExecutor;
 
 /**
@@ -18,11 +19,15 @@ public class MySqlSession {
         this.myExecutor = myExecutor;
     }
 
-    public <T> T getMapper(Class<T> type){
+    public <T> T getMapper(Class<T> type) {
         return myConfiguration.getMapper(type, this);
     }
 
-    public <T> T selectOne(String statement, String parameter){
-        return myExecutor.query(statement, parameter);
+    public <T> T selectOne(MyMapperRegistry.MapperData mapperData, Object parameter) throws Exception {
+        return myExecutor.query(mapperData, parameter);
+    }
+
+    public MyConfiguration getMyConfiguration() {
+        return myConfiguration;
     }
 }

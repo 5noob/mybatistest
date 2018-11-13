@@ -1,6 +1,6 @@
 package com.me.mybatis.proxy;
 
-import com.me.mybatis.config.MyConfiguration;
+import com.me.mybatis.config.MyMapperRegistry;
 import com.me.mybatis.sqlsession.MySqlSession;
 
 import java.lang.reflect.InvocationHandler;
@@ -21,10 +21,13 @@ public class MyMapperProxy implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        if(method.getDeclaringClass().getName().equals(MyConfiguration.TestXml.namespace)){
-            String sql = MyConfiguration.TestXml.methodSqlMapping.get(method.getName());
-            return mySqlSession.selectOne(sql, String.valueOf(args[0]));
+        MyMapperRegistry.MapperData mapperData = mySqlSession.getMyConfiguration()
+                .getMyMapperRegistry().get(method.getDeclaringClass().getName() + "." + method.getName());
+        if(null != mapperData){
+            System.out.println(String.format("SQL [ %s ], parameter [%s] ", mapperData.getSql(), args[0]));
+            return mySqlSession.selectOne(mapperData, args[0]);
         }
+
         return method.invoke(this, args);
     }
 }

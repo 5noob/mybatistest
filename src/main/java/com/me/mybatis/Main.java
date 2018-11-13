@@ -3,10 +3,8 @@ package com.me.mybatis;
 import com.me.mybatis.config.MyConfiguration;
 import com.me.mybatis.dao.TestDAO;
 import com.me.mybatis.domain.Test;
-import com.me.mybatis.executor.MySimpleExecutor;
+import com.me.mybatis.executor.MyExecutorFactory;
 import com.me.mybatis.sqlsession.MySqlSession;
-
-import java.io.IOException;
 
 /**
  * @author OuyangJie
@@ -15,11 +13,12 @@ import java.io.IOException;
  */
 public class Main {
 
-    public static MySqlSession getSqlSession() throws IOException {
-        return new MySqlSession(new MyConfiguration(), new MySimpleExecutor());
+    public static MySqlSession getSqlSession() {
+        return new MySqlSession(new MyConfiguration(),
+                MyExecutorFactory.getExecutor(MyExecutorFactory.ExecutorType.CACHING.name()));
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         TestDAO testDAO = getSqlSession().getMapper(TestDAO.class);
         Test test = testDAO.selectById(1);
         System.out.println(test);
