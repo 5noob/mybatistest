@@ -3,7 +3,6 @@ package com.me.mybatis;
 import com.me.mybatis.config.MyConfiguration;
 import com.me.mybatis.dao.TestDAO;
 import com.me.mybatis.domain.Test;
-import com.me.mybatis.executor.MyExecutorFactory;
 import com.me.mybatis.sqlsession.MySqlSession;
 
 /**
@@ -16,8 +15,7 @@ public class Main {
     public static MySqlSession getSqlSession() {
         MyConfiguration myConfiguration = new MyConfiguration();
         myConfiguration.scanPath("com.me.mybatis.dao");
-        return new MySqlSession(myConfiguration,
-                MyExecutorFactory.getExecutor(MyExecutorFactory.ExecutorType.CACHING.name()));
+        return new MySqlSession(myConfiguration);
     }
 
     public static void main(String[] args) {

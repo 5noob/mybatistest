@@ -14,9 +14,9 @@ public class MySqlSession {
 
     private MyExecutor myExecutor;
 
-    public MySqlSession(MyConfiguration myConfiguration, MyExecutor myExecutor) {
+    public MySqlSession(MyConfiguration myConfiguration) {
         this.myConfiguration = myConfiguration;
-        this.myExecutor = myExecutor;
+        this.myExecutor = myConfiguration.newExecutor();
     }
 
     public <T> T getMapper(Class<T> type) {
@@ -24,7 +24,7 @@ public class MySqlSession {
     }
 
     public <T> T selectOne(MyMapperRegistry.MapperData mapperData, Object parameter) throws Exception {
-        return myExecutor.query(mapperData, parameter);
+        return myExecutor.doQuery(mapperData, parameter);
     }
 
     public MyConfiguration getMyConfiguration() {

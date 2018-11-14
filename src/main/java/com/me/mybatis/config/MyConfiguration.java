@@ -1,8 +1,12 @@
 package com.me.mybatis.config;
 
 import com.me.mybatis.annotation.SqlAnno;
+import com.me.mybatis.executor.MyExecutor;
+import com.me.mybatis.executor.MyExecutorFactory;
+import com.me.mybatis.plugin.MyInterceptorChain;
 import com.me.mybatis.proxy.MyMapperProxy;
 import com.me.mybatis.sqlsession.MySqlSession;
+import com.me.mybatis.statementhandler.*;
 import com.me.mybatis.util.PackageUtil;
 import lombok.Data;
 
@@ -20,6 +24,34 @@ import java.util.Set;
 @Data
 public class MyConfiguration {
     private MyMapperRegistry myMapperRegistry = new MyMapperRegistry();
+    private MyInterceptorChain myInterceptorChain = new MyInterceptorChain();
+
+    public MyConfiguration() {
+    }
+
+    public MyExecutor newExecutor(){
+        MyExecutor myExecutor = MyExecutorFactory.getExecutor(MyExecutorFactory.ExecutorType.CACHING.name(), this);
+        myExecutor = (MyExecutor) myInterceptorChain.pluginAll(myExecutor);
+        return myExecutor;
+    }
+
+    public MyParameterHandler newParameterHandler(){
+        MyParameterHandler myParameterHandler = new MyDefaultParameterHandler();
+        myParameterHandler = (MyParameterHandler) myInterceptorChain.pluginAll(myParameterHandler);
+        return myParameterHandler;
+    }
+
+    public MyResultSetHandler newResutlSetHandler(){
+        MyResultSetHandler myResultSetHandler = new MyDefaultResultSetHandler();
+        myResultSetHandler = (MyResultSetHandler) myInterceptorChain.pluginAll(myResultSetHandler);
+        return myResultSetHandler;
+    }
+
+    public MyStatementHandler newStatementHandler(){
+        MyStatementHandler myStatementHandler = new MyDefaultStatementHandler(this);
+        myStatementHandler = (MyStatementHandler) myInterceptorChain.pluginAll(myStatementHandler);
+        return myStatementHandler;
+    }
 
     public void scanPath(String packageName){
         //获取包名下的所有类

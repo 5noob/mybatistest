@@ -1,5 +1,6 @@
 package com.me.mybatis.statementhandler;
 
+import com.me.mybatis.config.MyConfiguration;
 import com.me.mybatis.config.MyMapperRegistry;
 
 import java.sql.PreparedStatement;
@@ -15,9 +16,9 @@ public class MyDefaultStatementHandler implements MyStatementHandler {
 
     private MyResultSetHandler myResultSetHandler;
 
-    public MyDefaultStatementHandler() {
-        this.myParameterHandler = new MyDefaultParameterHandler();
-        this.myResultSetHandler = new MyDefaultResultSetHandler();
+    public MyDefaultStatementHandler(MyConfiguration myConfiguration) {
+        this.myParameterHandler = myConfiguration.newParameterHandler();
+        this.myResultSetHandler = myConfiguration.newResutlSetHandler();
    }
 
     @Override

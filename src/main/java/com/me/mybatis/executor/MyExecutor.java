@@ -16,5 +16,5 @@ public interface MyExecutor {
      * @param <T>
      * @return
      */
-    <T> T query(MyMapperRegistry.MapperData mapperData, Object parameter) throws Exception;
+    <T> T doQuery(MyMapperRegistry.MapperData mapperData, Object parameter) throws Exception;
 }
