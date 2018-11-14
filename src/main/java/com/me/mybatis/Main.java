@@ -29,7 +29,7 @@ public class Main {
         TestDAO testDAO = getSqlSession().getMapper(TestDAO.class);
         Test test = testDAO.selectById(1);
 
-        testDAO.testDefaultMethod();
+//        testDAO.testDefaultMethod();
 
         //类文件是缓存在java虚拟机中，我们将类文件打印到文件中，便于查看
 //        generateProxyFile("F:/TestDAOProxy.class");
