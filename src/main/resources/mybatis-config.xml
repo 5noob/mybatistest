@@ -3,14 +3,23 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-    <plugins>
-        <plugin interceptor="com.me.mybatis.plugin.ExamplePlugin">
-            <property name="someProperty" value="200" />
-        </plugin>
-        <!--<plugin interceptor="com.me.mybatis.plugin.SecondExamplePlugin">-->
+    <settings>
+        <setting name="logImpl" value="LOG4J" />
+        <!--打开延迟加载的开关  -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!--将积极加载改为消极加载及按需加载  -->
+        <setting name="aggressiveLazyLoading" value="false"/>
+        <!--<setting name="lazyLoadTriggerMethods" value=""/>-->
+    </settings>
+
+    <!--<plugins>-->
+        <!--<plugin interceptor="com.me.mybatis.plugin.ExamplePlugin">-->
             <!--<property name="someProperty" value="200" />-->
         <!--</plugin>-->
-    </plugins>
+        <!--&lt;!&ndash;<plugin interceptor="com.me.mybatis.plugin.SecondExamplePlugin">&ndash;&gt;-->
+            <!--&lt;!&ndash;<property name="someProperty" value="200" />&ndash;&gt;-->
+        <!--&lt;!&ndash;</plugin>&ndash;&gt;-->
+    <!--</plugins>-->
 
     <environments default="development">
         <environment id="development">

@@ -1,6 +1,7 @@
 package com.me.mybatis;
 
 import com.me.mybatis.dao.TestDAO;
+import com.me.mybatis.domain.Address;
 import com.me.mybatis.domain.Test;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -28,6 +29,16 @@ public class Main {
     public static void main(String[] args) throws IOException {
         TestDAO testDAO = getSqlSession().getMapper(TestDAO.class);
         Test test = testDAO.selectById(1);
+        System.out.println("=========================================");
+
+        //1、idea 的debug模式也会触发懒加载，所以debug模式下，看不到懒加载的情况。只好不debug，而是直接运行，借助日志来看
+
+        //2、toString方法也会触发懒加载 --！
+//        System.out.println(test);
+
+        System.out.println("=========================================");
+        Address address = test.getAddress();
+        System.out.println(address);
 
 //        testDAO.testDefaultMethod();
 

@@ -6,16 +6,14 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author OuyangJie
- * @Date 2018/11/9 17:47
+ * @Date 2018/11/15 9:17
  * @Description:
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Test {
-    private Integer id;
+public class Address {
+    private int id;
 
-    private String name;
-
-    private Address address;
+    private String city;
 }

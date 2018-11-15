@@ -5,16 +5,23 @@
     <resultMap id="testMap" type="com.me.mybatis.domain.Test">
         <result property="id" column="id" />
         <result property="name" column="name" />
+        <association property="address" column="address_id" fetchType="lazy" select="selectAddressById" />
     </resultMap>
 
     <sql id="allColumn">
-        id, name
+        id, name, address_id
     </sql>
 
     <select id="selectById" resultMap="testMap">
         SELECT <include refid="allColumn"/>
         FROM test
         WHERE id = #{id}
+    </select>
+
+    <select id="selectAddressById" resultType="com.me.mybatis.domain.Address">
+        select id, city
+        from address
+        where id = #{id}
     </select>
 
 </mapper>
